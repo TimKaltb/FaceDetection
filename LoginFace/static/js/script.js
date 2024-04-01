@@ -41,7 +41,7 @@ function register(){
         body:formData
     })
 
-    .then(message=>message.json())
+    .then(response=>response.json())
     .then(data=>{
         if(data.success){
             alert("Information Succesfully Registered")
@@ -73,7 +73,7 @@ function login(){
         body:formData
     })
 
-    .then(message=>message.json())
+    .then(response=>response.json())
     .then(data=>{
         console.log(data)
         if(data.success){

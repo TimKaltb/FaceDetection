@@ -10,75 +10,83 @@ registered_data = {}
 
 @app.route("/")
 def index():
-    return render_template("website.html")
+    return render_template("index.html")
 
 @app.route("/register",methods=["POST"])
 def register():
     name = request.form.get("name")
-    face = request.files['face']
-    faces_folder = os.path.join(os.getcwd(),"static", "faces")
-    if not os.path.exists(faces_folder):
-        os.makedirs(faces_folder)
+    photo = request.files['photo']
+    uploads_folder = os.path.join(os.getcwd(),"static", "uploads")
+    if not os.path.exists(uploads_folder):
+        os.makedirs(uploads_folder)
+
+    photo.save(os.path.join(uploads_folder,f'{datetime.date.today()}_{name}.jpg'))
+    registered_data[name] = f"{datetime.date.today()}_name{name}.jpg"
+
+    response = {"success":True,'name':name}
+    return jsonify(response)
+
 
     # Validating file type
-    if face.filename.split(".")[-1].lower() not in ["jpg", "jpeg", "png"]:
-        return jsonify({"error": "Invalid file format. Only JPG, JPEG, and PNG files are allowed."}), 400
+    #if photo.filename.split(".")[-1].lower() not in ["jpg", "jpeg", "png"]:
+     #   return jsonify({"error": "Invalid file format. Only JPG, JPEG, and PNG files are allowed."}), 400
 
-    filename = f'{datetime.date.today()}_{name}.jpg'
-    file_path = os.path.join(faces_folder, filename)
-    face.save(file_path)
+    #filename = f'{datetime.date.today()}_{name}.jpg'
+    #file_path = os.path.join(uploads_folder, filename)
+    #photo.save(file_path)
 
-    registered_data[name] = filename
+    #registered_data[name] = filename
 
-    message = {"Register Successful": True, 'name': name}
-    return jsonify(message)
+    #response = {"Registration successful": True, 'name': name}
+    #return jsonify(response)
 
 @app.route("/login",methods=["POST"])
 def login():
-    face = request.files['face']
+    photo = request.files['photo']
 
-    faces_folder = os.path.join(os.getcwd(),"static", "faces")
-    if not os.path.exists(faces_folder):
-        os.makedirs(faces_folder)
+    uploads_folder = os.path.join(os.getcwd(),"static", "uploads")
+    if not os.path.exists(uploads_folder):
+        os.makedirs(uploads_folder)
 
-    login_filename = os.path.join(faces_folder,"login_face.jpg")
-    face.save(login_filename)
+    login_filename = os.path.join(uploads_folder,"login_photo.jpg")
+    photo.save(login_filename)
 
     login_image = cv2.imread(login_filename)
     gray_image = cv2.cvtColor(login_image, cv2.COLOR_BGR2GRAY)
 
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalphoto_default.xml")
     faces = face_cascade.detectMultiScale(gray_image, scaleFactor=1.1, minNeighbors=5, minSize=(30,30))
 
     if len(faces) == 0:
-        message = {"Login Successful": False}
-        return jsonify(message)
+        response = {"success": False}
+        return jsonify(response)
 
     login_image = face_recognition.load_image_file(login_filename)
 
     login_face_encodings = face_recognition.face_encodings(login_image)
 
     for name, filename in registered_data.items():
-        registered_face = os.path.join(faces_folder, filename)
-        registered_image = face_recognition.load_image_file(registered_face)
+        registered_photo = os.path.join(uploads_folder, filename)
+        
+        registered_image = face_recognition.load_image_file(registered_photo)
 
         registered_face_encodings = face_recognition.face_encodings(registered_image)
 
         if len(registered_face_encodings) > 0 and len(login_face_encodings) > 0:
-            match = face_recognition.compare_faces(registered_face_encodings, login_face_encodings[0])
+            matches = face_recognition.compare_uploads(registered_face_encodings, login_face_encodings[0])
 
-            print("MATCH", match)
-            if any(match):
-                message = {"Login Successful": True, "name": name}
-                return jsonify(message)
-    message = {"Login Successful": False}
-    return jsonify(message)
+            print("matches", matches)
+            if any(matches):
+                response = {"success": True, "name": name}
+                return jsonify(response)
+    response = {"success": False}
+    return jsonify(response)
 
-@app.route("/Login Successful")
+@app.route("/success")
 def success():
     # Change user_name to name
-    name = request.args.get("name")
-    return render_template("loginsuccess.html", user_name=name)
+    user_name = request.args.get("user_name")
+    return render_template("success.html", user_name=user_name)
 
 if __name__ == "__main__":
     app.run(debug=True)
