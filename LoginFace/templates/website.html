@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Gee & Tim's Final Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #video {
+            width: 440px;
+            height: 280px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #canvas {
+            display: none;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        h3 {
+            color: #ff6600;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h1 style="color: #007bff;">Welcome to Gee & Tim's Final Project</h1>
+        <video id="video" autoplay></video>
+        <br>
+        <button onclick="capture()">Capture Photo Face</button>
+        <br>
+        <canvas id="canvas" width="400" height="280"></canvas>
+        <br>
+        <h3>Register Account:</h3>
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <br>
+        <button onclick="register()">Register Now</button>
+        <button onclick="login()">Login</button>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
