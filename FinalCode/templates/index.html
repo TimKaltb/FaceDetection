@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Set character encoding and viewport for responsiveness -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Set the title of the page -->
+    <title>Welcome to Gee & Tim's Final Project</title>
+    <!-- Embedded CSS styles for styling the page -->
+    <style>
+        /* Global styling for the body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+        }
+        /* Styling for the video element */
+        #video {
+            width: 440px;
+            height: 280px;
+        }
+        /* Styling for buttons */
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        /* Hover effect for buttons */
+        button:hover {
+            background-color: #0056b3;
+        }
+        /* Hide canvas element by default */
+        #canvas {
+            display: none;
+        }
+        /* Styling for labels */
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        /* Styling for text input fields */
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        /* Styling for heading 3 elements */
+        h3 {
+            color: #ff6600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main content of the page -->
+    <div style="text-align: center;">
+        <!-- Main heading of the page -->
+        <h1 style="color: #007bff;">Welcome to Gee & Tim's Final Project</h1>
+        <!-- Video element for displaying webcam feed -->
+        <video id="video" autoplay></video>
+        <br>
+        <!-- Button to capture a photo from the webcam -->
+        <button onclick="capture()">Capture Photo Face</button>
+        <br>
+        <!-- Canvas element for displaying captured photo -->
+        <canvas id="canvas" width="400" height="280"></canvas>
+        <br>
+        <!-- Heading for registration section -->
+        <h3>Register Account:</h3>
+        <!-- Input field for entering user's name -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <br>
+        <!-- Buttons for registration and login actions -->
+        <button onclick="register()">Register Now</button>
+        <button onclick="login()">Login</button>
+    </div>
+    <!-- External JavaScript file for handling client-side logic -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Gee & Tim's Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            text-align: center;
+            position: relative; /* Ensure proper positioning of the gifs */
+            transition: background-color 0.5s ease; /* Add transition effect for smooth color change */
+        }
+        h1 {
+            font-size: 6em;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            color: black;
+        }
+        #success_message {
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: green;
+        }
+        .corner-gif {
+            position: absolute;
+            width: 100px; /* Adjust size as needed */
+            height: 100px; /* Adjust size as needed */
+        }
+        .top-left {
+            top: 0;
+            left: 0;
+        }
+        .top-right {
+            top: 0;
+            right: 0;
+        }
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+        }
+        .bottom-right {
+            bottom: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome! You've Made It to Gee & Tim's Website</h1>
+    <div id="success_message"></div>
+
+    <script>
+        function changeBackgroundColor() {
+            // Generate random RGB values
+            var r = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+            
+            // Apply the new color to the body background
+            document.body.style.backgroundColor = 'rgb(' + r + ',' + g + ',' + b + ')';
+        }
+
+        // Change background color every second
+        setInterval(changeBackgroundColor, 100);
+    </script>
+</body>
+</html>
